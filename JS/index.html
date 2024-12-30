@@ -1,0 +1,223 @@
+<html>
+	<body>
+
+		<h2>Dati accesso ADE</h2>
+		<label>Codice Fiscale</label>
+		<input type="text" id="CF" value="MNFGBR74R30F735I">
+
+		<label>PIN</label>
+		<input type="text" id="PIN" value="5047865807">
+
+		<label>Password</label>
+		<input type="text" id="Password" value="@Coding2024">
+
+		<label>ID Fiscale</label>
+		<input type="text" id="PIVA" value="03601370780">
+
+		<label>Utenza</label>
+		<select type="text" id="utenza" value="incaricato">
+			<option value="incaricato">Incaricato</option>
+			<option value="mestesso">Me stesso</option>
+			
+		</select>
+		<br/>
+		<label>apikey servizio DCW</label>
+		<input type="text" id="apikey" value="245c85cd35e3a9b4f773a52c71972097">
+
+		<br/>
+		<button onclick="login()">Verifica accesso</button>
+
+
+		<div style="display: none" id="receipt_panel">
+			<h2>Dati scontrino</h2>
+			<table border="1">
+				<thead>
+					<th>Articolo</th>
+					<th>Quantità</th>
+					<th>Prezzo Unitario Netto</th>
+					<th>IVA</th>
+					<th>Totale</th>
+				</thead>
+				<tbody id="list">
+					
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="4">Totale</td>
+						<td id="total"></td>
+					</tr>
+					<tr>
+						<td colspan="4">Pagamento Contanti</td>
+						<td ><input type="number" min=0 id="payment_cash" value=0></td>
+					</tr>
+					<tr>
+						<td colspan="4">Pagamento Elettronicoi</td>
+						<td ><input type="number" min=0 id="payment_card" value=0></td>
+					</tr>
+
+				</tfoot>
+			</table>
+
+			<hr/>
+			
+			<label>Articolo</label>
+			<input type="text" id="description" placeholder="ex. Reparto 1">
+
+			<label>Quantità</label>
+			<input type="number" min="0" id="quantity" value=1>
+
+			<label>Prezzo Unitario</label>
+			<input type="number" min="0" id="priceunit" value=0>
+
+			<label>Sconto netto</label>
+			<input type="number" min="0" id="discount" value=0>
+
+			<label>IVA</label>
+			<select id="tax">
+				<option value="22">22%</option>
+				<option value="10">22%</option>
+				<option value="5">22%</option>
+				<option value="4">22%</option>
+				<option value="N1">0% (N1)</option>
+				<option value="N2">0% (N2)</option>
+				<option value="N3">0% (N3)</option>
+				<option value="N4">0% (N4)</option>
+				<option value="N5">0% (N5)</option>
+				<option value="N6">0% (N6)</option>
+			</select> 
+
+
+			<label>Omaggio</label>
+			<select id="gratis">
+				<option value="false">No</option>
+				<option value="true">Si</option>
+			</select> 
+
+			<button onclick="add()">Aggiungi</button>
+			<br/>
+			<br/>
+			<button onclick="send()">Invia scontrino</button>
+		</div>
+		<hr/>
+
+		<h2>Risposta del servizio DCW</h2>
+		<textarea id="response" cols="50" rows="10"></textarea>
+
+		<script type="text/javascript" src="./lib.dcw.js"></script>
+		<script type="text/javascript">
+			var dcw;
+			var CF;
+			var Password;
+			var PIVA;
+			var PIN;
+			var Utenza="incaricato";
+			const Tipo="FOL";
+			var apikey;
+
+
+
+
+
+			
+
+
+			function login(){
+
+				CF=document.getElementById("CF").value;
+				Password=document.getElementById("Password").value;
+				PIVA=document.getElementById("PIVA").value;
+				PIN=document.getElementById("PIN").value;
+
+				var Utenzaobj = document.getElementById("utenza");
+				const Utenza = Utenzaobj.options[Utenzaobj.selectedIndex].value;
+				apikey=document.getElementById("apikey").value;
+				dcw=new DCWService(CF,Password,PIVA,PIN,Utenza,apikey);
+
+				dcw.login((response)=>{
+					document.getElementById("response").innerHTML=JSON.stringify(response);
+					
+					if(response.result==true){
+						document.getElementById("receipt_panel").style.display="block";
+					}
+				})
+			}
+
+			
+
+
+			function add(){
+				const description=document.getElementById("description").value;
+				const quantity=document.getElementById("quantity").value;
+				const priceunit=document.getElementById("priceunit").value;
+				const discount=document.getElementById("discount").value;
+
+				var taxobj = document.getElementById("tax");
+				const tax = taxobj.options[taxobj.selectedIndex].value;
+				
+
+				var gratisobj = document.getElementById("gratis");
+				const gratis = gratisobj.options[gratisobj.selectedIndex].value;
+								
+				dcw.addGood(description,quantity,priceunit,discount,tax,gratis=="true"?true:false);
+				refresh();
+			}
+
+			function refresh(){
+				
+
+				var list = document.getElementById('list');
+				list.innerHTML='';
+
+				const goods=dcw.getGoods();
+
+				for(let g of goods){
+					// Insert a row at the end of table
+					var newRow = list.insertRow();
+
+					// Insert a cell at the end of the row
+					var newCell = newRow.insertCell();
+					var newText = document.createTextNode(g.description);
+					newCell.appendChild(newText);
+
+					newCell = newRow.insertCell();
+					newText = document.createTextNode(g.quantity);
+					newCell.appendChild(newText);
+
+					newCell = newRow.insertCell();
+					newText = document.createTextNode(g.priceunit);
+					newCell.appendChild(newText);
+
+					newCell = newRow.insertCell();
+					newText = document.createTextNode(g.tax);
+					newCell.appendChild(newText);
+
+					const total=dcw.calculateTotalRow(g.priceunit,g.quantity,g.tax);
+
+					newCell = newRow.insertCell();
+					newText = document.createTextNode(total);
+					newCell.appendChild(newText);
+
+				}
+
+				var list = document.getElementById('total').innerHTML=dcw.calculateTotal();
+			}
+
+			function send(){
+
+
+				dcw.addHeader("Company Name","Address test","xx","City Test","00000","IT","0000000000","XXXXXX00XX00XX000")
+
+				const payment_card=document.getElementById("payment_card").value;
+				const payment_cash=document.getElementById("payment_cash").value;
+
+				dcw.addPaymentCard(payment_card);
+				dcw.addPaymentCash(payment_cash);
+				
+				dcw.sendReceipt((response)=>{
+					document.getElementById("response").innerHTML=JSON.stringify(response);
+				});
+			}
+		</script>
+	</body>
+
+</html>
