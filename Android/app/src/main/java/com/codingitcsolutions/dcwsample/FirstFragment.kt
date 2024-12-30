@@ -29,11 +29,11 @@ class FirstFragment : Fragment() {
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
 
         //TODO da cancellare
-        binding.CF.setText("MNFGBR74R30F735I")
-        binding.Password.setText("@Coding2024")
-        binding.PIN.setText("5047865807")
-        binding.PIVA.setText("03601370780")
-        binding.apikey.setText("245c85cd35e3a9b4f773a52c71972097")
+        binding.CF.setText("")
+        binding.Password.setText("")
+        binding.PIN.setText("")
+        binding.PIVA.setText("")
+        binding.apikey.setText("")
 
         return binding.root
 
