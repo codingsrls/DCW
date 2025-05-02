@@ -33,7 +33,7 @@ Il campo _PIVA_ deve possedere il valore che è riportato nella selezione dell'a
 
 Di seguito un esempio di richiesta:
 
-GET [https://dcw.codingictsolution.it:8585/login?CF=XXXXXX00X00X000X&amp;PIN=123456789&amp;Password=password1&amp;Tipo=incaricato&amp;Utenza=FOL&amp;apikey=xxxxxxxxxxxxxxx](https://dcw.codingictsolution.it:8585/login?CF=XXXXXX00X00X000X&PIN=123456789&Password=password1&Tipo=incaricato&Utenza=FOL&apikey=xxxxxxxxxxxxxxx)
+GET [https://dcw.codingictsolution.it:8585/login?CF=XXXXXX00X00X000X&amp;PIN=123456789&amp;Password=password1&amp;Tipo=incaricato&amp;Utenza=FOL&amp;apikey=xxxxxxxxxxxxxxx](https://dcw.c1m.it:8585/login?CF=XXXXXX00X00X000X&PIN=123456789&Password=password1&Tipo=incaricato&Utenza=FOL&apikey=xxxxxxxxxxxxxxx)
 
 Le chiamate generano risposte JSON del tipo:
 
