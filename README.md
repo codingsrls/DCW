@@ -4,7 +4,7 @@ _**DCW eXpress**_ è il servizio API che permette di **consultare ed emettere sc
 
 _**DCW eXpress**_ **è un velocizzatore** perchè automatizza tutte le operazione che bisognerebbe effettuare manualmente sul sito dell'_Agenzia delle Entrate (ADE)_, come l'inserimento dei dati di accesso, la selezione dell'utenza di lavoro, la selezione della società su cui lavorare, l'accettazione delle condizioni di utilizzo, la compilazione dei dati dello scontrino e il suo invio. Tutte queste operazioni sono effettuate in pochissime chiamate API.
 
-Per usare il servizio, basta registrarsi sul sito [https://dcw.codingictsolution.it](https://dcw.codingictsolution.it) ed ottenere la chiave API da inserire nelle chiamate di accesso.
+Per usare il servizio, basta registrarsi sul sito [https://dcw.c1m.it](https://dcw.c1m.it) ed ottenere la chiave API da inserire nelle chiamate di accesso.
 
 ## Come funziona?
 
@@ -41,7 +41,7 @@ Le chiamate generano risposte JSON del tipo:
 
 ## Posso fare delle prove?
 
-Si, registrati gratuitamente sul h[ttps://dcw.codingictsolution.it](https://dcw.codingictsolution.it) per ottenere la chiave API test. Con questa chiave potrai:
+Si, registrati gratuitamente sul h[ttps://dcw.c1m.it](https://dcw.c1m.it) per ottenere la chiave API test. Con questa chiave potrai:
 
 - consultare gli scontrini presenti sul sito dell'ADE, ricercandoli per periodo (l'ADE limita l'arco temporale delle ricerche per max 30 giorni)
     
