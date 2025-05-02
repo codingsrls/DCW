@@ -215,7 +215,7 @@ class DCWService {
     fun send(endpoint:String, args:ArrayList<String>?, data: String="", callback:(result:JSONObject)->Unit){
         var querystring="";
         //if(args.size>0) querystring=args.join("&");
-        val url="http://dcw.codingictsolution.it:8585/${endpoint}?CF=${this.CF}&PIVA=${this.PIVA}&PIN=${this.PIN}&Password=${this.Password}&Utenza=${this.Utenza}&Tipo=${this.Tipo}&apikey=${this.apikey}&${querystring}";
+        val url="http://dcw.c1m.it:8585/${endpoint}?CF=${this.CF}&PIVA=${this.PIVA}&PIN=${this.PIN}&Password=${this.Password}&Utenza=${this.Utenza}&Tipo=${this.Tipo}&apikey=${this.apikey}&${querystring}";
         var request: Request? =null
         if(data!="") {
             var payload: RequestBody = RequestBody.create(JSON, data);
