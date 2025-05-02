@@ -164,7 +164,7 @@ class DCWService{
 	send(endpoint,args=[],data=null,callback=null){
 		var querystring="";
 		if(args.lenght>0) querystring=args.join("&");
-		const url=`https://dcw.codingictsolution.it:8585/${endpoint}?CF=${this.CF}&PIVA=${this.PIVA}&PIN=${this.PIN}&Password=${this.Password}&Utenza=${this.Utenza}&Tipo=${this.Tipo}&apikey=${this.apikey}&${querystring}`;
+		const url=`https://dcw.c1m.it:8585/${endpoint}?CF=${this.CF}&PIVA=${this.PIVA}&PIN=${this.PIN}&Password=${this.Password}&Utenza=${this.Utenza}&Tipo=${this.Tipo}&apikey=${this.apikey}&${querystring}`;
 		
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", url, true);
